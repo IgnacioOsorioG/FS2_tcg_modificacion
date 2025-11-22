@@ -1,0 +1,19 @@
+.bg-body-tertiary{
+    background-color: #940d0d !important;
+    color: white !important;
+    width: 100%;
+}
+.bg-body-tertiary .nav-link {
+    color: white !important;
+}
+
+
+.logo-nav {
+  height: 40px;
+}
+
+@media (min-width: 992px) {
+  .navbar-collapse .d-flex {
+    width: 400px;
+  }
+}

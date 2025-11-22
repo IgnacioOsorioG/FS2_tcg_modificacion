@@ -1,0 +1,46 @@
+.contenedor-registro {
+  max-width: 500px;
+  margin: 3rem auto;
+}
+
+.tarjeta-registro-tabs {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tarjeta-registro-tabs .nav-tabs {
+  border-bottom: none;
+  background-color: #f8f9fa;
+}
+
+.tarjeta-registro-tabs .nav-link {
+  color: #6c757d;
+  border: none;
+  padding: 1rem 1.5rem;
+  background-color: transparent; 
+  transition: all 0.3s ease; 
+}
+
+.tarjeta-registro-tabs .nav-link:hover {
+  color: #343a40; 
+}
+
+.tarjeta-registro-tabs .nav-link.active {
+  color: #fff;
+  font-weight: bold;
+  background-color: #940d0d; 
+  border-radius: 15px 15px 0 0; 
+}
+
+.tarjeta-registro-tabs .tab-content {
+  background-color: #fff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.tarjeta-registro-tabs .btn-danger {
+  background-color: #940d0d;
+  border: none;
+}

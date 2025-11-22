@@ -1,0 +1,12 @@
+.imagen-franquicia {
+  width: 250px;
+  height: 150px;
+  border: 2px solid #ddd;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.imagen-franquicia:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  border-color: #940d0d; 
+}

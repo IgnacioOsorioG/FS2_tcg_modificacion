@@ -1,0 +1,9 @@
+.pagina-contacto {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.pagina-contacto .btn-danger {
+  background-color: #940d0d;
+  border: none;
+}

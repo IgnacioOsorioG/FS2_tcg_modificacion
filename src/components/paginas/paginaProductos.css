@@ -1,0 +1,37 @@
+.contenedor-productos-pagina {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.titulo-franquicia {
+  text-transform: capitalize; 
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.tarjeta-producto-tienda {
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta-producto-tienda:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tarjeta-producto-tienda .card-body {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+.precio-producto {
+  font-weight: bold;
+  color: #333;
+  margin-top: auto; 
+  margin-bottom: 1rem;
+}
