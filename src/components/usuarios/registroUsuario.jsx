@@ -19,6 +19,7 @@ const RegistroUsuario = () => {
 
   const [errores, setErrores] = useState({});
   const [alerta, setAlerta] = useState(null);
+  const [enviando, setEnviando] = useState(false);
 
   const [loginValues, setLoginValues] = useState({
     usuario: '',
@@ -27,6 +28,7 @@ const RegistroUsuario = () => {
 
   const [loginErrores, setLoginErrores] = useState({});
   const [loginAlerta, setLoginAlerta] = useState(null);
+  const [enviandoLogin, setEnviandoLogin] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -44,32 +46,51 @@ const RegistroUsuario = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setAlerta(null);
     const nuevosErrores = validarRegistro(formValues);
     setErrores(nuevosErrores);
 
     if (Object.keys(nuevosErrores).length === 0) {
-      setAlerta({
-        tipo: 'success',
-        mensaje: '¡Registro exitoso! Ahora puedes iniciar sesión.',
-      });
-      // Guardar usuario registrado en localStorage (demo sin backend)
+      setEnviando(true);
+
+      const usuarioParaBackend = {
+        usuarioNombre: formValues.usuario,
+        correo: formValues.email,
+        password: formValues.password,
+        terminos: formValues.aceptaTerminos
+      };
+
       try {
-        const saved = localStorage.getItem('registeredUsers');
-        const lista = saved ? JSON.parse(saved) : [];
-        // comprobar duplicados por usuario o email
-        const existe = lista.find(u => u.usuario === formValues.usuario || u.email === formValues.email);
-        if (!existe) {
-          lista.push({ usuario: formValues.usuario, email: formValues.email, password: formValues.password });
-          localStorage.setItem('registeredUsers', JSON.stringify(lista));
+        const respuesta = await fetch('http://localhost:8082/api/usuarios', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(usuarioParaBackend),
+        });
+
+        if (!respuesta.ok) {
+            throw new Error('Error al registrar en la base de datos');
         }
+
+        setAlerta({
+          tipo: 'success',
+          mensaje: '¡Registro exitoso en la base de datos! Ahora puedes iniciar sesión.',
+        });
+        setFormValues({ usuario: '', email: '', password: '', confirmPassword: '', aceptaTerminos: false });
+
       } catch (err) {
-        console.error('Error guardando registro', err);
+        console.error('Error guardando registro:', err);
+        setAlerta({
+            tipo: 'danger',
+            mensaje: 'Error de conexión con el servidor. Inténtalo más tarde.',
+        });
+      } finally {
+        setEnviando(false);
       }
 
-      setFormValues({ usuario: '', email: '', password: '', confirmPassword: '', aceptaTerminos: false });
     } else {
       setAlerta({
         tipo: 'danger',
@@ -78,30 +99,46 @@ const RegistroUsuario = () => {
     }
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoginAlerta(null);
     const nuevosErrores = validarLogin(loginValues);
     setLoginErrores(nuevosErrores);
 
     if (Object.keys(nuevosErrores).length === 0) {
-      // Verificar credenciales contra usuarios registrados guardados en localStorage
+      setEnviandoLogin(true);
+
       try {
-        const saved = localStorage.getItem('registeredUsers');
-        const lista = saved ? JSON.parse(saved) : [];
-        const encontrado = lista.find(u => u.usuario === loginValues.usuario && u.password === loginValues.password);
+        const respuesta = await fetch('http://localhost:8082/api/usuarios');
+        
+        if(!respuesta.ok) {
+            throw new Error('No se pudo conectar con el servidor');
+        }
+
+        const usuariosDB = await respuesta.json();
+
+        const encontrado = usuariosDB.find(u => 
+            u.usuarioNombre === loginValues.usuario && u.password === loginValues.password
+        );
+
         if (encontrado) {
           setLoginAlerta({ tipo: 'success', mensaje: '¡Inicio de sesión exitoso! Redirigiendo...' });
-          login({ usuario: encontrado.usuario, email: encontrado.email });
+          
+          login({ usuario: encontrado.usuarioNombre, email: encontrado.correo });
+          
           setLoginValues({ usuario: '', password: '' });
           setTimeout(() => navigate('/'), 1000);
           return;
+        } else {
+            setLoginAlerta({ tipo: 'danger', mensaje: 'Usuario o contraseña incorrectos.' });
         }
+
       } catch (err) {
         console.error('Error verificando credenciales', err);
+        setLoginAlerta({ tipo: 'danger', mensaje: 'Error al conectar con la base de datos.' });
+      } finally {
+        setEnviandoLogin(false);
       }
-
-      setLoginAlerta({ tipo: 'danger', mensaje: 'Usuario o contraseña incorrectos.' });
 
     } else {
       setLoginAlerta({
@@ -132,6 +169,7 @@ const RegistroUsuario = () => {
                 value={formValues.usuario}
                 onChange={handleChange}
                 isInvalid={!!errores.usuario}
+                disabled={enviando}
               />
               <Form.Control.Feedback type="invalid">
                 {errores.usuario}
@@ -146,6 +184,7 @@ const RegistroUsuario = () => {
                 value={formValues.email}
                 onChange={handleChange}
                 isInvalid={!!errores.email}
+                disabled={enviando}
               />
               <Form.Control.Feedback type="invalid">
                 {errores.email}
@@ -160,6 +199,7 @@ const RegistroUsuario = () => {
                 value={formValues.password}
                 onChange={handleChange}
                 isInvalid={!!errores.password}
+                disabled={enviando}
               />
               <Form.Control.Feedback type="invalid">
                 {errores.password}
@@ -174,6 +214,7 @@ const RegistroUsuario = () => {
                 value={formValues.confirmPassword}
                 onChange={handleChange}
                 isInvalid={!!errores.confirmPassword}
+                disabled={enviando}
               />
               <Form.Control.Feedback type="invalid">
                 {errores.confirmPassword}
@@ -191,11 +232,12 @@ const RegistroUsuario = () => {
                 feedback={errores.aceptaTerminos}
                 feedbackType="invalid"
                 id="checkbox-formu"
+                disabled={enviando}
               />
             </Form.Group>
 
-            <Button variant="danger" type="submit" className="w-100">
-              Registrarse
+            <Button variant="danger" type="submit" className="w-100" disabled={enviando}>
+              {enviando ? 'Registrando...' : 'Registrarse'}
             </Button>
           </Form>
         </Tab>
@@ -217,6 +259,7 @@ const RegistroUsuario = () => {
                 value={loginValues.usuario}
                 onChange={handleLoginChange}
                 isInvalid={!!loginErrores.usuario}
+                disabled={enviandoLogin}
               />
               <Form.Control.Feedback type="invalid">
                 {loginErrores.usuario}
@@ -231,14 +274,15 @@ const RegistroUsuario = () => {
                 value={loginValues.password}
                 onChange={handleLoginChange}
                 isInvalid={!!loginErrores.password}
+                disabled={enviandoLogin}
               />
               <Form.Control.Feedback type="invalid">
                 {loginErrores.password}
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Button variant="danger" type="submit" className="w-100">
-              Iniciar sesión
+            <Button variant="danger" type="submit" className="w-100" disabled={enviandoLogin}>
+              {enviandoLogin ? 'Verificando...' : 'Iniciar sesión'}
             </Button>
           </Form>
         </Tab>

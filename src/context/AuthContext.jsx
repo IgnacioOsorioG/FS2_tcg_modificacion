@@ -2,8 +2,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext(null);
 
-// Correos permitidos como administradores (demo). Ajustar según necesites.
-const ADMIN_EMAILS = ['nacho@tienda.cl', 'cris@tienda.cl'];
+const ADMIN_CONFIG = {
+    'nacho@tienda.cl': 'Ryshock',
+    'cris@tienda.cl': 'Ravel'
+};
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -18,9 +20,16 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (userObj) => {
-        setUser(userObj);
+        let usuarioFinal = { ...userObj };
+
+        if (userObj.email && ADMIN_CONFIG[userObj.email]) {
+            usuarioFinal.usuario = ADMIN_CONFIG[userObj.email];
+        }
+
+        setUser(usuarioFinal);
+        
         try {
-            localStorage.setItem('authUser', JSON.stringify(userObj));
+            localStorage.setItem('authUser', JSON.stringify(usuarioFinal));
         } catch (err) {
             console.error('Error guardando usuario en localStorage', err);
         }
@@ -35,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const isAdmin = !!(user && user.email && ADMIN_EMAILS.includes(user.email));
+    const isAdmin = !!(user && user.email && Object.keys(ADMIN_CONFIG).includes(user.email));
 
     return (
         <AuthContext.Provider value={{ user, login, logout, isAdmin }}>
