@@ -72,7 +72,7 @@ const Header = () => {
               <>
                 {isAdmin && <Nav.Link as={Link} to="/admin">Admin</Nav.Link>}
                 <NavDropdown title={user.usuario} id="user-nav-dropdown" align="end">
-                  <NavDropdown.Item onClick={() => navegar('/perfil')}>Mi cuenta</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/mi-cuenta">Mi cuenta</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>Cerrar sesión</NavDropdown.Item>
                 </NavDropdown>
