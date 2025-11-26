@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; 
-import './franquicia.css';
 
 const SeccionFranquicias = () => {
   const franquicias = [
@@ -18,13 +17,16 @@ const SeccionFranquicias = () => {
       <Row>
         {franquicias.map((franquicia) => (
           <Col md={3} sm={6} xs={12} key={franquicia.nombre} className="mb-4">
-            <Link to={franquicia.enlace}>
-              <Image 
-                src={franquicia.logo} 
-                alt={`Logo de ${franquicia.nombre}`} 
-                className="imagen-franquicia"
-                rounded 
-              />
+            <Link to={franquicia.enlace} className="text-decoration-none">
+              
+              <div className="franquicia-container h-100 d-flex justify-content-center align-items-center">
+                <Image 
+                  src={franquicia.logo} 
+                  alt={`Logo de ${franquicia.nombre}`} 
+                  className="img-fluid"
+                />
+              </div>
+
             </Link>
           </Col>
         ))}
