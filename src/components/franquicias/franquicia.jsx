@@ -12,13 +12,15 @@ const SeccionFranquicias = () => {
 
   return (
     <Container className="text-center my-5">
-      <h2>Nuestras Franquicias</h2>
-      <hr />
+      
+      <div className="titulo-encapsulado">
+        <h2>Nuestras Franquicias</h2>
+      </div>
+      
       <Row>
         {franquicias.map((franquicia) => (
           <Col md={3} sm={6} xs={12} key={franquicia.nombre} className="mb-4">
             <Link to={franquicia.enlace} className="text-decoration-none">
-              
               <div className="franquicia-container h-100 d-flex justify-content-center align-items-center">
                 <Image 
                   src={franquicia.logo} 
@@ -26,7 +28,6 @@ const SeccionFranquicias = () => {
                   className="img-fluid"
                 />
               </div>
-
             </Link>
           </Col>
         ))}

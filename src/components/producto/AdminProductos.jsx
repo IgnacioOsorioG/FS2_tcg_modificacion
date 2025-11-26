@@ -157,27 +157,41 @@ const AdminProductos = () => {
                         />
                     </Col>
                     <Col md={2}>
-                        <Form.Control 
+                        <Form.Select 
                             name="franquicia" 
-                            placeholder="Franquicia" 
                             value={formulario.franquicia} 
                             onChange={manejarCambio} 
-                        />
+                            required
+                        >
+                            <option value="">Selecciona Franquicia</option>
+                            <option value="pokemon">Pokémon</option>
+                            <option value="yugioh">Yu-Gi-Oh!</option>
+                            <option value="magic">Magic</option>
+                            <option value="mitos">Mitos y Leyendas</option>
+                        </Form.Select>
                     </Col>
                     <Col md={2}>
-                        <Form.Control 
+                        <Form.Select 
                             name="tipo" 
-                            placeholder="Tipo" 
                             value={formulario.tipo} 
                             onChange={manejarCambio} 
-                        />
+                            required
+                        >
+                            <option value="">Selecciona Tipo</option>
+                            <option value="cartas">Cartas / Sobres</option>
+                            <option value="decks">Mazos / Decks</option>
+                            <option value="boxes">Cajas / Boxes</option>
+                            <option value="accesorios">Accesorios</option>
+                        </Form.Select>
                     </Col>
                     <Col md={2}>
                         <Form.Control 
                             name="precio" 
                             placeholder="Precio" 
+                            type="number"
                             value={formulario.precio} 
                             onChange={manejarCambio} 
+                            required
                         />
                     </Col>
                     <Col md={3}>
