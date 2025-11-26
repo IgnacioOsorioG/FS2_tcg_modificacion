@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
 import Header from './components/header/header.jsx';
 import Footer from './components/footer/footer.jsx';
 import Carrito from './components/carrito/carrito.jsx';
@@ -12,7 +13,9 @@ import Ingreso from './Ingreso.jsx';
 import PaginaProductos from './components/paginas/paginaProductos.jsx';
 import PaginaBusqueda from './components/paginas/paginaBusqueda.jsx';
 import AdminProductos from './components/producto/AdminProductos.jsx';
-import MiCuenta from './components/usuarios/MiCuenta.jsx'; 
+import MiCuenta from './components/usuarios/MiCuenta.jsx';
+import BotonInicio from './ui/BotonInicio.jsx';
+
 import { ProveedorCarrito } from './components/carrito/ContextoCarrito.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
@@ -23,6 +26,7 @@ function Layout() {
       <main>
         <Outlet />
       </main>
+      <BotonInicio />
       <Footer />
     </div>
   );
