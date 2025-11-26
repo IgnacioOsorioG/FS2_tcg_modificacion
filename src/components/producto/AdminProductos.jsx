@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Table, Button, Form, Row, Col, Alert } from 'react-bootstrap';
 
-const API_URL = 'http://localhost:8081/api/productos';
-
+const API_URL = 'http://18.234.130.170:8081/api/productos';
 const AdminProductos = () => {
     const [productos, setProductos] = useState([]);
     

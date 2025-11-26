@@ -3,8 +3,7 @@ import { Container, Row, Col, Card, Table, Badge, Tab, Tabs, Alert, Button } fro
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
-const API_TICKETS = 'http://localhost:8080/api/tickets'; 
-
+const API_TICKETS = 'http://98.83.97.82:8080/api/tickets';
 const MiCuenta = () => {
     const { user } = useAuth();
     const navigate = useNavigate();

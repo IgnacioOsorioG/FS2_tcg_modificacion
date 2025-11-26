@@ -63,7 +63,7 @@ const RegistroUsuario = () => {
       };
 
       try {
-        const respuesta = await fetch('http://localhost:8082/api/usuarios', {
+        const respuesta = await fetch('http://54.84.50.10:8082/api/usuarios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const RegistroUsuario = () => {
       setEnviandoLogin(true);
 
       try {
-        const respuesta = await fetch('http://localhost:8082/api/usuarios');
+        const respuesta = await fetch('http://54.84.50.10:8082/api/usuarios');
         
         if(!respuesta.ok) {
             throw new Error('No se pudo conectar con el servidor');

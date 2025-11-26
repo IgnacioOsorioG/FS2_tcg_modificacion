@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const API_URL = 'http://localhost:8081/api/productos';
-
+const API_URL = 'http://18.234.130.170:8081/api/productos';
 const ListaProductos = () => {
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);

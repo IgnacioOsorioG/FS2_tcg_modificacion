@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
 import { usarCarrito } from '../carrito/ContextoCarrito.jsx';
 
-const API_URL = 'http://localhost:8081/api/productos';
-
+const API_URL = 'http://18.234.130.170:8081/api/productos';
 const PaginaProductos = () => {
   const { franquicia } = useParams();
   const { agregarAlCarrito } = usarCarrito();
