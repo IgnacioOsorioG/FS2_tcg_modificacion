@@ -19,7 +19,7 @@ const RegistroUsuario = () => {
 
   const [errores, setErrores] = useState({});
   const [alerta, setAlerta] = useState(null);
-  const [enviando, setEnviando] = useState(false);
+  const [enviando, setEnviando] = useState(false); 
 
   const [loginValues, setLoginValues] = useState({
     usuario: '',
@@ -46,6 +46,7 @@ const RegistroUsuario = () => {
     });
   };
 
+  // --- REGISTRO CON NUEVA IP ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAlerta(null);
