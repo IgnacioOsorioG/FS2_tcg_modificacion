@@ -41,7 +41,7 @@ const Contacto = () => {
       };
 
       try {
-        const respuesta = await fetch('http://98.83.97.82/api/tickets', {
+        const respuesta = await fetch('http://98.83.97.82:8080/api/tickets', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
