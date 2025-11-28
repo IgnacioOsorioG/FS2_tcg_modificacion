@@ -46,7 +46,6 @@ const RegistroUsuario = () => {
     });
   };
 
-  // --- REGISTRO CON NUEVA IP ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAlerta(null);
